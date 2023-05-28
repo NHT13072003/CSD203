@@ -37,6 +37,7 @@ class StackLL:
         else:
             self.tail.next = newnode
             self.tail = newnode
+    # add element at the end of the LinkedList
     #def
 
     def pop(self):
@@ -54,7 +55,8 @@ class StackLL:
             popped = curr.next
             self.tail = curr
             self.tail.next = None
-        del popped
+        return popped.data
+    # delete element at the end of the LinkedList return data of deleted element
     #def
 
     def top(self):
@@ -74,6 +76,7 @@ class StackLL:
                 result.append(curr.data)
                 curr = curr.next 
             print(result)
+    # Convert Linked List to List 
     #def
 
 def decimal_to_binary1(decimal_num):
@@ -115,6 +118,7 @@ class QueueLL:
         else:
             newNode.next = self.head
             self.head = newNode
+    # add element at the head of the Linked List
     #def
 
     def deQueue(self):
@@ -131,7 +135,8 @@ class QueueLL:
                 curr = curr.next
             curr.next = None
             self.tail = curr
-            del popped
+        return popped.data
+    # delete element at the end of the Linked List
     #def
 
     def first(self):
@@ -151,21 +156,24 @@ class QueueLL:
                 result.append(curr.data)
                 curr = curr.next
             return result
+    # convert Linked List to the List
     #def
 
 def decimal_to_binary2(decimal_num):
     queue = QueueLL()
-
+    if decimal_num == 0:
+        queue.enQueue(0)
     while decimal_num > 0:
-        decimal_num *= 2
-        digit = int(decimal_num)
-        queue.enqueue(digit)
-        decimal_num -= digit
+        remainder = decimal_num % 2
+        queue.enQueue(remainder)
+        decimal_num //= 2
 
     binary_num = ""
     while not queue.isEmpty():
-        binary_num += str(queue.dequeue())
+        binary_num = str(queue.deQueue()) + binary_num
 
     return binary_num
 #def
+print(decimal_to_binary1(15))
+print(decimal_to_binary2(16))
 
