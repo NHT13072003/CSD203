@@ -5,6 +5,8 @@ def return_book(books_list, borrowed_books_list):
 
     if book is not None:
         book.status = "available"
-        print("Book returned successfully.") 
+        print("Book returned successfully.")
+        books_list.writetxt()
     else: 
         print("Book not found in the borrowed books list.")
+#def

@@ -8,15 +8,19 @@ class TreeNode:
 class BST:
     def __init__(self):
         self.root = None
+    #def
 
     def isEmpty(self):
         return self.root is None
+    #def
 
     def clear(self):
         self.root = None
+    #def
 
     def search(self, x):
         return self._search_helper(self.root, x)
+    #def
 
     def _search_helper(self, node, x):
         if node is None or node.val == x:
@@ -25,11 +29,13 @@ class BST:
             return self._search_helper(node.left, x)
         else:
             return self._search_helper(node.right, x)
+    #def
 
     def insert(self, x):
         if self.search(x):
             return  # Node already exists
         self.root = self._insert_helper(self.root, x)
+    #def
 
     def _insert_helper(self, node, x):
         if node is None:
@@ -39,6 +45,7 @@ class BST:
         else:
             node.right = self._insert_helper(node.right, x)
         return node
+    #def
 
     def breadth(self):
         if self.isEmpty():
@@ -53,11 +60,13 @@ class BST:
             if node.right:
                 queue.append(node.right)
         return result
+    #def
 
     def preorder(self):
         result = []
         self._preorder_helper(self.root, result)
         return result
+    #def
 
     def _preorder_helper(self, node, result):
         if node is None:
@@ -65,11 +74,13 @@ class BST:
         result.append(node.val)
         self._preorder_helper(node.left, result)
         self._preorder_helper(node.right, result)
+    #def
 
     def inorder(self):
         result = []
         self._inorder_helper(self.root, result)
         return result
+    #def
 
     def _inorder_helper(self, node, result):
         if node is None:
@@ -77,11 +88,13 @@ class BST:
         self._inorder_helper(node.left, result)
         result.append(node.val)
         self._inorder_helper(node.right, result)
+    #def
 
     def postorder(self):
         result = []
         self._postorder_helper(self.root, result)
         return result
+    #def
 
     def _postorder_helper(self, node, result):
         if node is None:
@@ -89,19 +102,23 @@ class BST:
         self._postorder_helper(node.left, result)
         self._postorder_helper(node.right, result)
         result.append(node.val)
+    #def
 
     def count(self):
         return self._count_helper(self.root)
+    #def
 
     def _count_helper(self, node):
         if node is None:
             return 0
         return 1 + self._count_helper(node.left) + self._count_helper(node.right)
+    #def
 
     def dele(self, x):
         if not self.search(x):
             return  # Node does not exist
         self.root = self._delete_helper(self.root, x)
+    #def
 
     def _delete_helper(self, node, x):
         if node is None:
@@ -120,42 +137,51 @@ class BST:
                 node.val = min_right.val
                 node.right = self._delete_helper(node.right, min_right.val)
         return node
+    #def
 
     def _find_min(self, node):
         while node.left:
             node = node.left
         return node
+    #def
 
     def find_min(self):
         if self.isEmpty():
             return None
         return self._find_min(self.root).val
+    #def
 
     def find_max(self):
         if self.isEmpty():
             return None
         return self._find_max(self.root).val
+    #def
 
     def _find_max(self, node):
         while node.right:
             node = node.right
         return node
+    #def
 
     def _sum_helper(self, node):
         if node is None:
             return 0
         return node.val + self._sum_helper(node.left) + self._sum_helper(node.right)
+    #def
 
     def sum(self):
         return self._sum_helper(self.root)
+    #def
 
     def avg(self):
         total = self.sum()
         count = self.count()
         return total / count if count > 0 else 0
+    #def
 
     def height(self):
         return self._height_helper(self.root)
+    #def
 
     def _height_helper(self, node):
         if node is None:
@@ -163,17 +189,21 @@ class BST:
         left_height = self._height_helper(node.left)
         right_height = self._height_helper(node.right)
         return 1 + max(left_height, right_height)
+    #def
 
     def _cost_helper(self, node):
         if node is None:
             return 0
         return node.val + max(self._cost_helper(node.left), self._cost_helper(node.right))
+    #def
 
     def max_cost_path(self):
         return self._cost_helper(self.root)
+    #def
 
     def is_avl(self):
         return self._is_avl_helper(self.root)
+    #def
 
     def _is_avl_helper(self, node):
         if node is None:
@@ -183,9 +213,11 @@ class BST:
         if abs(left_height - right_height) > 1:
             return False
         return self._is_avl_helper(node.left) and self._is_avl_helper(node.right)
+    #def
 
     def is_heap(self):
         return self._is_heap_helper(self.root)
+    #def
 
     def _is_heap_helper(self, node):
         if node is None:
@@ -195,7 +227,7 @@ class BST:
         if node.right is not None and node.right.val > node.val:
             return False
         return self._is_heap_helper(node.left) and self._is_heap_helper(node.right)
-
+    #def
 
 # Example usage:
 

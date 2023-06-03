@@ -1,10 +1,14 @@
-from LinkedList import LinkedList
+from LinkedList import *
 from AddBook import add_book
 from ViewBooks import view_books
 from DeleteBook import delete_book
 from BorrowedBook import borrow_book
 from ReturnBook import return_book
-
+import os
+def check_file_exists(filename):
+    return os.path.isfile(filename)
+#def Check out the available library
+ 
 def display_menu():
     print("Library Management System Menu:")
     print("1. Add Book")
@@ -13,9 +17,14 @@ def display_menu():
     print("4. Borrow Book")
     print("5. Return Book")
     print("0. Exit")
+#def Display menu
 
 def run():
-    books_list = LinkedList()
+    filename = "book_data.txt"
+    if check_file_exists(filename):
+        books_list = restoreLL(filename)
+    else:
+        books_list = LinkedList()
     borrowed_books_list = LinkedList()
 
     while True:

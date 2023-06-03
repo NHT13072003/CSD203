@@ -2,6 +2,7 @@ class BorrowedBook:
     def __init__(self, bid, borrower):
         self.bid = bid
         self.borrower = borrower
+    #def Create borrowed book Linked List
 
 def borrow_book(books_list, borrowed_books_list):
     bid = input("Enter the book ID to borrow: ")
@@ -17,3 +18,5 @@ def borrow_book(books_list, borrowed_books_list):
         borrowed_book = BorrowedBook(bid, borrower)
         borrowed_books_list.insert(borrowed_book)
         print("Book borrowed successfully.")
+        books_list.writetxt()
+#def 
