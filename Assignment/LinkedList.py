@@ -85,10 +85,9 @@ def restoreLL(filename):
     with open(filename, "r") as file:
         table_str = file.read()
         lines = table_str.split('\n')
-        headers = lines[1].split('|')[1:-1]
         for line in lines[3:-1:2]:
             data = line.split('|')[1:-1]
-            book = Book(data[0], data[1], data[2], data[3])
+            book = Book(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip())
             books_list.insert(book)  # Insert the book into the existing LinkedList object
         
     return books_list
