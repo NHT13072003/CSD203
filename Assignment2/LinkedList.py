@@ -1,4 +1,6 @@
 from Customer import *
+from Employee import *
+from Order import *
 from tabulate import tabulate
 class Node:
     def __init__(self, data):
@@ -52,16 +54,6 @@ class LinkedList:
         with open(filename, 'r') as file:
             content = file.read()
         print(content)
-        # current = self.head
-        # book_data = []
-        
-        # while current:
-        #     book = current.data
-        #     book_data.append([book.bid, book.title, book.author, book.status])
-        #     current = current.next
-        
-        # headers = ["Book ID", "Title", "Author", "Status"]
-        # print(tabulate(book_data, headers, tablefmt="grid"))
     
     #edit
     def txtCustomer(self):
@@ -93,6 +85,45 @@ class LinkedList:
         with open("Order_List.txt", "w") as file:
             file.write(table_str)
     #def
+
+    def txtEmployee(self):
+        current = self.head
+        result = []
+        
+        while current:
+            employee = current.data
+            result.append([employee.ecode, employee.ename, employee.revenue])
+            current = current.next
+        
+        headers = ["Employee Code", "Employee Name", "Revennue"]
+        table_str = tabulate(result, headers, tablefmt="grid")
+        with open("Employee_List.txt", "w") as file:
+            file.write(table_str)
+    #def
+
+    def txtOrder(self):
+        current = self.head
+        result = []
+        
+        while current:
+            order = current.data
+            result.append([order.ocode, order.cname, order.pname, order.quantity, order.status])
+            current = current.next
+        
+        headers = ["Order code", "Customer name", "Product", "Quantity", "Status"]
+        table_str = tabulate(result, headers, tablefmt="grid")
+        with open("Order_List.txt", "w") as file:
+            file.write(table_str)
+    #def
+
+    def findMax(self):
+        curr = self.head
+        max = self.head
+        while curr:
+            if curr.data.revenue < max.data.revenue:
+                max = curr
+            curr = curr.next
+        return max
     
 def loadLL(filename):
     cList = LinkedList()

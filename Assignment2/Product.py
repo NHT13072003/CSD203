@@ -11,7 +11,10 @@ class Product:
 def updateProductSaled(pTree, pcode, upsaled):
     node = pTree.search(pcode)
     node.saled += upsaled
+    pTree.txtInOrder()
+    pTree.txtBreadthFirst()
     return f"Update saled successfully!"
+
 #def
 
 def updateProduct(pTree):
@@ -24,6 +27,9 @@ def updateProduct(pTree):
         checkp.saled += upsaled
     else:
         print("The product does not exist in stock, choose add product option to add a new one")
+    pTree.txtInOrder()
+    pTree.txtBreadthFirst()
+    return f"Update product successfully!"
 #def
 
 def addProduct(pTree):
@@ -45,8 +51,9 @@ def addProduct(pTree):
         product = Product(pcode, pname, quantity, saled, price)
         pTree.insert(product)
         print(f"{pname} add successfully in stock")
-        pTree.txtInOrder()
-        pTree.txtBreadthFirst()
+    pTree.txtInOrder()
+    pTree.txtBreadthFirst()
+    return f"Add product successfully!"
 #def add product and write in txt file with InOrder and BreadthFirst
 
 def inOrderTraversal(filename):

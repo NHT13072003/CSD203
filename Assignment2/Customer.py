@@ -25,7 +25,7 @@ def addCustomer(cList):
         customer = Customer(ccode, cname, phone)
         cList.insert(customer)
         print("Customer add successfully!")
-        cList.txtCustomer()
+    cList.txtCustomer()
 #def
 
 def displayCustomer(cList):
@@ -54,4 +54,5 @@ def deleteCcode(cList):
     else:
         cList.delete(ccode)
         print(f"Deleted sucessfully product {ccode}")
+    cList.txtCustomer()
 #def 
