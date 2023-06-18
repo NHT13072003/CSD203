@@ -1,5 +1,5 @@
+from Customer import *
 from tabulate import tabulate
-from AddBook import *
 class Node:
     def __init__(self, data):
         self.data = data
@@ -23,33 +23,32 @@ class LinkedList:
                 current = current.next
             current.next = new_node
 
-    def search(self,bid):
+    def search(self,key):
         current = self.head
 
         while current:
-            if current.data.bid == bid:
+            if current.data.key == key:
                 return current.data
             current = current.next
         return None
 
-    def delete(self, bid):
+    def delete(self, ccode):
         if self.head is None:
             return None
-        if bid == self.head.data.bid:
+        if ccode == self.head.data.ccode:
             self.head = self.head.next
             return
         current = self.head
         prev = None
         while True:
-            if current.data.bid == bid:
+            if current.data.ccode == ccode:
                 prev.next = current.next
                 return
             prev = current
             current = current.next
 
 
-    def display(self):
-        filename = "book_data.txt"
+    def display(filename):
         with open(filename, 'r') as file:
             content = file.read()
         print(content)
@@ -65,31 +64,43 @@ class LinkedList:
         # print(tabulate(book_data, headers, tablefmt="grid"))
     
     #edit
-    def writetxt(self):
+    def txtCustomer(self):
         current = self.head
-        book_data = []
+        result = []
         
         while current:
-            book = current.data
-            book_data.append([book.bid, book.title, book.author, book.status])
+            cus = current.data
+            result.append([cus.ccode, cus.cname, cus.phone])
             current = current.next
         
-        headers = ["Book ID", "Title", "Author", "Status"]
-        table_str = tabulate(book_data, headers, tablefmt="grid")
-        with open("book_data.txt", "w") as file:
+        headers = ["Customer Code", "Customer Name", "Phone number"]
+        table_str = tabulate(result, headers, tablefmt="grid")
+        with open("Customer_List.txt", "w") as file:
             file.write(table_str)
     #def
 
-def restoreLL(filename):
-    books_list = LinkedList()  # Create LinkedList object outside the loop
+    def txtOrder(self):
+        current = self.head
+        result = []
+        
+        while current:
+            order = current.data
+            result.append([order.pcode, order.ccode, order.quantity])
+            current = current.next
+        
+        headers = ["Product Code", "Customer Code", "Product Quantity"]
+        table_str = tabulate(result, headers, tablefmt="grid")
+        with open("Order_List.txt", "w") as file:
+            file.write(table_str)
+    #def
     
+def loadLL(filename):
+    cList = LinkedList()
     with open(filename, "r") as file:
         table_str = file.read()
         lines = table_str.split('\n')
         for line in lines[3:-1:2]:
-            data = line.split('|')[1:-1]
-            book = Book(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip())
-            books_list.insert(book)  # Insert the book into the existing LinkedList object
-        
-    return books_list
+            data = line.split('|')[1:-1]  
+            customer = Customer(data[0].strip(), data[1].strip(), data[2].strip())  
+            cList.insert(customer)
 #def
