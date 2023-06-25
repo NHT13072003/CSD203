@@ -229,6 +229,21 @@ class BSTree:
             file.write(table_str)
     #def write breadth first traversal in txt file
 
+    def find_max_value(root):
+        if root is None:
+            return float('-inf')
+
+        max_value = root.key
+        left_max = find_max_value(root.lt)
+        right_max = find_max_value(root.rt)
+
+        if left_max.saled > max_value.saled:
+            max_value = left_max
+        if right_max.saled > max_value.saled:
+            max_value = right_max
+
+        return max_value
+
 def loadTree(filename):
     pTree = BSTree()
     with open(filename, "r") as file:

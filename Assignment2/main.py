@@ -14,7 +14,6 @@ def display_menu():
     print("1. Product")
     print("2. Customer")
     print("3. Order")
-    print("4. Sale action")
     print("5. Manager employee")
     print("0. Exit")
 #def 
@@ -27,7 +26,7 @@ def display_product():
     print("4. Breadth-first Traverse")
     print("5. Search by Productcode ")
     print("6. Delete by Productcode")
-    print("7. Simply balancing ")
+    print("7. Product most sold ")
     print("8. Count number of products")
     print("0. Exit")
 #def
@@ -68,21 +67,21 @@ def run():
     else:
         cList = LinkedList() 
     if check_file_exists("Order_List.txt"):
-        oList = loadCustomer("Order_List.txt")
+        oList = loadOrder("Order_List.txt")
     else:
         oList = LinkedList()
     if check_file_exists("Employee_List.txt"):
-        eList = loadCustomer("Employee_List.txt")
+        eList = loadEmployee("Employee_List.txt")
     else:
         eList = LinkedList()
     
     while True:
         display_menu()
-        choice = input("Enter your choice: ")
-        if choice == "1":
+        choice = int(input("Enter your choice: "))
+        if choice == 1:
             while True:
                 display_product()
-                choice1 = input("Enter your choice: ")
+                choice1 = input("Enter your choice 1: ")
                 if choice1 == "1":
                     addProduct(pTree)
                 elif choice1 == "2":
@@ -96,60 +95,60 @@ def run():
                 elif choice1 == "6":
                     deletePcode(pTree)
                 elif choice1 == "7":
-                    continue
+                    mostSold(pTree)
                 elif choice1 == "8":
                     countProduct("Product_List_IO.txt")
-                elif choice == "0":
+                elif choice1 == "0":
                     break
                 else:
                     print("Invalid choice. Please try again.")
-        elif choice == "2":
+        elif choice == 2:
             while True:
-                display_product()
-                choice2 = input("Enter your choice: ")
+                display_customer()
+                choice2 = input("Enter your choice 2: ")
                 if choice2 == "1":
                     addCustomer(cList)
                 elif choice2 == "2":
-                    displayCustomer(cList)
+                    displayCustomer()
                 elif choice2 == "3":
                     searchCcode(cList)
                 elif choice2 == "4":
                     deleteCcode(cList)
-                elif choice == '0':
+                elif choice2 == '0':
                     break
                 else:
                     print("Invalid choice. Please try again.")
-        elif choice == "3":
+        elif choice == 3:
             while True:
-                display_product()
-                choice3 = input("Enter your choice: ")
+                display_order()
+                choice3 = input("Enter your choice 3: ")
                 if choice3 == "1":
-                    addCustomer(cList)
+                    createOrder(pTree, cList, eList, oList)
                 elif choice3 == "2":
-                    displayOrder(oList)
+                    displayOrder()
                 elif choice3 == "3":
                     completeOrder(oList,pTree, eList)
                 elif choice3 == "4":
                     invoice(oList,pTree, cList, eList)
-                elif choice == '0':
+                elif choice3 == '0':
                     break
                 else:
                     print("Invalid choice. Please try again.")
-        elif choice == "4":
+        elif choice == 4:
             while True:
-                display_product()
-                choice4 = input("Enter your choice: ")
+                display_employee()
+                choice4 = input("Enter your choice 4: ")
                 if choice4 == "1":
                     addEmplyee(eList)
                 elif choice4 == "2":
-                    displayEmployee(eList)
+                    displayEmployee()
                 elif choice4 == "3":
                     findMaxRevenue(eList)
-                elif choice == '0':
+                elif choice4 == '0':
                     break
                 else:
                     print("Invalid choice. Please try again.")
-        elif choice == '0':
+        elif choice == 0:
                     break
         else:
             print("Invalid choice. Please try again.")

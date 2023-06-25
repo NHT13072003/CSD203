@@ -11,7 +11,7 @@ class Product:
 
 def updateProductSaled(pTree, pcode, upsaled):
     node = pTree.searchBST(pcode)
-    node.saled += upsaled
+    node.key.saled += upsaled
     pTree.txtInOrder()
     pTree.txtBreadthFirst()
     return f"Update saled successfully!"
@@ -103,6 +103,11 @@ def countProduct(filename):
             count += 1
     print(f"Number of product is: {count}")
 
-def balancing():
-    pass
+def mostSold(pTree):
+    pmostSold = pTree.find_max_value()
+    result = [[pmostSold.pcode, pmostSold.pname, pmostSold.quantity, pmostSold.saled, pmostSold.price]]
+    headers = ["Product code", "Product name", "Quantity", "Saled", "Price"]
+    table_str = tabulate(result, headers, tablefmt="grid")
+    print("This is the product most sold:")
+    print(table_str)
 #def

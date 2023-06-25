@@ -25,15 +25,42 @@ class LinkedList:
                 current = current.next
             current.next = new_node
 
-    def search(self,key):
+    def searchcCode(self,key):
         current = self.head
 
         while current:
-            if current.data.key == key:
+            if current.data.ccode == key:
+                return current.data
+            current = current.next
+        return None
+    
+    def searcheCode(self,key):
+        current = self.head
+
+        while current:
+            if current.data.ecode == key:
+                return current.data
+            current = current.next
+        return None
+    
+    def searcheName(self,key):
+        current = self.head
+
+        while current:
+            if current.data.ename == key:
                 return current.data
             current = current.next
         return None
 
+    def searchoCode(self,key):
+        current = self.head
+
+        while current:
+            if current.data.ocode == key:
+                return current.data
+            current = current.next
+        return None
+    
     def delete(self, ccode):
         if self.head is None:
             return None
@@ -77,10 +104,10 @@ class LinkedList:
         
         while current:
             order = current.data
-            result.append([order.pcode, order.ccode, order.quantity])
+            result.append([ order.ocode, order.pcode, order.pname, order.cname, order.quantity, order.ename, order.status, order.time])
             current = current.next
         
-        headers = ["Product Code", "Customer Code", "Product Quantity"]
+        headers = ["Order Code", "Product Code", "Product Name","Customer Name", "Quanlity", "Employee Name", "Order Status", "Order Time"]
         table_str = tabulate(result, headers, tablefmt="grid")
         with open("Order_List.txt", "w") as file:
             file.write(table_str)
@@ -108,10 +135,11 @@ class LinkedList:
         curr = self.head
         max = self.head
         while curr:
-            if curr.data.revenue < max.data.revenue:
+            if curr.data.revenue > max.data.revenue:
                 max = curr
             curr = curr.next
         return max
+    #def
     
 def loadCustomer(filename):
     cList = LinkedList()
@@ -122,6 +150,7 @@ def loadCustomer(filename):
             data = line.split('|')[1:-1]  
             customer = Customer(data[0].strip(), data[1].strip(), data[2].strip())  
             cList.insert(customer)
+    return cList
 #def
 
 def loadOrder(filename):
@@ -131,8 +160,9 @@ def loadOrder(filename):
         lines = table_str.split('\n')
         for line in lines[3:-1:2]:
             data = line.split('|')[1:-1]  
-            order = Order(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip(), data[4].strip(), data[5].strip(), data[6].strip(), data[7].strip())  
+            order = Order(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip(), int(data[4].strip()), data[5].strip(), data[6].strip(), data[7].strip())  
             oList.insert(order)
+    return oList
 #def
 
 def loadEmployee(filename):
@@ -142,6 +172,7 @@ def loadEmployee(filename):
         lines = table_str.split('\n')
         for line in lines[3:-1:2]:
             data = line.split('|')[1:-1]  
-            employee = Employee(data[0].strip(), data[1].strip(), data[2].strip())  
+            employee = Employee(data[0].strip(), data[1].strip(), float(data[2].strip()))  
             eList.insert(employee)
+    return eList
 #def

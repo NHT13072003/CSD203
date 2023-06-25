@@ -3,7 +3,7 @@ from Employee import *
 from Product import *
 import datetime
 class Order: 
-    def __init__(self,ocode, pname, cname, quantity, ename, status, time, pcode):
+    def __init__(self,ocode, pcode, pname, cname, quantity, ename, status, time):
         self.pcode = pcode
         self.ocode = ocode
         self.pname = pname
@@ -19,77 +19,80 @@ class Order:
 def createOrder(pTree, cList, eList, oList):
     while True:
         ocode = input("Enter the order code: ")
-        if oList.search(ocode) is not None:
+        if oList.searchoCode(ocode) is not None:
             print("Order already exists")
         else:
             break
     while True:
         pcode = input("Enter the product code: ")
-        if pTree.search(pcode) is None:
+        if pTree.searchBST(pcode) is None:
             print("Product does not exist!")
         else:
-            product = pTree.search(pcode)
-            pname = product.pname
+            product = pTree.searchBST(pcode)
+            pname = product.key.pname
             break
     while True:
         ccode = input("Enter the customer code: ")
-        if cList.search(ccode) is None:
+        if cList.searchcCode(ccode) is None:
             print("Customer does not exist!")
             ask = "Do you want to add customer(y/n)?: "
             if ask == "y":
                 addCustomer(cList)
-                customer = cList.search(ccode)
+                customer = cList.searchcCode(ccode)
                 cname = customer.cname
                 break
             else:
                 continue
         else:
-            customer = cList.search(ccode)
+            customer = cList.searchcCode(ccode)
             cname = customer.cname
             break
     while True:
         ecode = input("Enter the employee code: ")
-        if eList.search(ecode) is None:
+        if eList.searcheCode(ecode) is None:
             print("Employee does not exist!")
         else:
-            employee = eList.search(ecode)
+            employee = eList.searcheCode(ecode)
             ename = employee.ename
             break
     quantity = int(input("Enter the number of product you want to order: "))
     status = "Ordering"
     time = datetime.datetime.now()
-    order = Order(ocode, pname, cname, quantity, ename, status, time, pcode)
+    order = Order(ocode, pcode, pname, cname, quantity, ename, status, time)
     oList.insert(order)
     oList.txtOrder()
     return "Create order successfully"
 #def
 
-def displayOrder(oList):
-    print("This is Order List: ")
-    oList.display("Order_List.txt")
+def displayOrder():
+    print("This is Employee List: ")
+    with open("Order_List.txt", 'r') as file:
+        content = file.read()
+        print(content)
 #def
 
 def completeOrder(oList,pTree, eList):
     while True:
         ocode = input("Enter the order code: ")
-        order = oList.search(ocode)
+        order = oList.searchoCode(ocode)
         if order is None:
             print("Order does not exist")
         else:
             break
     checkStatus = order.status
     if checkStatus == "Ordering":
-        product = pTree.search(order.pcode)
-        available = product.quantity - product.saled
+        product = pTree.searchBST(order.pcode)
+        available = product.key.quantity - product.key.saled
         if order.quantity <= available:
             order.status = "Completed"
             time = datetime.datetime.now()
             order.time = time
-            product.saled += order.quantity
-            employee = eList.search(order.ename)
-            employee.revenue += order.quantity*product.price
+            updateProductSaled(pTree, order.pcode, order.quantity)
+            employee = eList.searcheName(order.ename)
+            employee.revenue += order.quantity*product.key.price
             oList.txtOrder()
-            return "Completed the order {ocode}"
+            eList.txtEmployee()
+            print(f"Completed the order {ocode}")
         else:
             ask = input("The number of goods in stock is not enough, do you want to wait or reduce the quantity?(w/r): ")
             if ask == "w":
@@ -99,9 +102,9 @@ def completeOrder(oList,pTree, eList):
                 order.status = "Completed"
                 time = datetime.datetime.now()
                 order.time = time
-                product.saled = product.quantity
-                employee = eList.search(order.ename)
-                employee.revenue += order.quantity*product.price
+                product.key.saled = product.key.quantity
+                employee = eList.searcheName(order.ename)
+                employee.revenue += order.quantity*product.key.price
                 oList.txtOrder()
                 return "Completed the order {ocode}"
 #def
