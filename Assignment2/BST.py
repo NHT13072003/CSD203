@@ -13,12 +13,12 @@ class Node:
             root = Node(key)
             self = root
             return root
-        elif key < self.key:
+        elif key.pcode < self.key.pcode:
             if self.lt == None:
                 self.lt = Node(key)
             else:
                 self.lt.insert(key)
-        elif key > self.key:
+        elif key.pcode > self.key.pcode:
             if self.rt == None:
                 self.rt = Node(key)
             else:
@@ -44,17 +44,17 @@ class BSTree:
             self.root.insert(key)
     # def insert
 
-    def delete(self, key):
+    def deleteBST(self, key):
         fnode = None
         fc = None
         curr = self.root
 
         while curr != None:
-            if curr.key > key:
+            if curr.key.pcode > key:
                 fnode = curr
                 curr = curr.lt
                 fc = 'Left'
-            elif curr.key < key:
+            elif curr.key.pcode < key:
                 fnode = curr
                 curr = curr.rt
                 fc = 'Right'
@@ -63,7 +63,7 @@ class BSTree:
                     #xÃ³a nÃºt gá»‘c
                     if curr.lt == None and curr.rt == None:
                         #xÃ³a nÃºt gá»‘c ko cÃ³ con
-                        self.root == None
+                        self.root = None
                     elif curr.lt == None:
                         #xÃ³a nÃºt gá»‘c chá»‰ cÃ³ nÃºt con pháº£i
                         self.root = curr.rt
@@ -171,28 +171,13 @@ class BSTree:
             return result
     # def post order traversal
 
-    def search(self, key):
-        # if self.root == None:
-        #     return
-        # curr = self.root
-        # result = ''
-        # while (curr != None and curr.key != key ):
-        #     result = result + f'{curr.key } -> '
-        #     if key <= curr.key:
-        #         curr = curr.lt
-        #     else:
-        #         curr = curr.rt
-        # if curr == None:
-        #     return None
-        # else:
-        #     result = result + f'{curr.key}'
-        # return result
+    def searchBST(self, key):
         current = self.root
 
         while current is not None:
-            if key == current.key:
-                return current.key  
-            elif key < current.key:
+            if key == current.key.pcode:
+                return current  
+            elif key < current.key.pcode:
                 current = current.lt  
             else:
                 current = current.rt 
@@ -204,13 +189,13 @@ class BSTree:
         curr = root
         if root == 0:
             curr = self.root
-        if root == None:
+        if curr == None:
             return []
         else:
             result = []
             result_lt = self.inOrder(curr.lt)
             for x in result_lt:
-                product = x.key
+                product = x
                 result.append([product.pcode, product.pname, product.quantity, product.saled, product.price])
 
             result.append([curr.key.pcode, curr.key.pname, curr.key.quantity, curr.key.saled, curr.key.price])
@@ -251,6 +236,7 @@ def loadTree(filename):
         lines = table_str.split('\n')
         for line in lines[3:-1:2]:
             data = line.split('|')[1:-1]  
-            product = Product(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip(), data[4].strip())  
-            pTree.insert(product)   
+            product = Product(data[0].strip(), data[1].strip(), int(data[2].strip()), int(data[3].strip()), float(data[4].strip()))  
+            pTree.insert(product)
+    return pTree   
 #def Load BST from breadth first txt file

@@ -99,7 +99,7 @@ def run():
                     continue
                 elif choice1 == "8":
                     countProduct("Product_List_IO.txt")
-                elif choice == '0':
+                elif choice == "0":
                     break
                 else:
                     print("Invalid choice. Please try again.")

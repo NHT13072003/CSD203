@@ -10,7 +10,7 @@ class Product:
     #def
 
 def updateProductSaled(pTree, pcode, upsaled):
-    node = pTree.search(pcode)
+    node = pTree.searchBST(pcode)
     node.saled += upsaled
     pTree.txtInOrder()
     pTree.txtBreadthFirst()
@@ -20,12 +20,12 @@ def updateProductSaled(pTree, pcode, upsaled):
 
 def updateProduct(pTree):
     pcode = input("Enter the product code: ")
-    checkp = pTree.search(pcode)
+    checkp = pTree.searchBST(pcode)
     if checkp is not None: 
         upquantity = int(input(f"Enter the new quantity of product: "))
         upsaled = int(input(f"Enter the new saled of product: "))
-        checkp.quantity += upquantity
-        checkp.saled += upsaled
+        checkp.key.quantity += upquantity
+        checkp.key.saled += upsaled
     else:
         print("The product does not exist in stock, choose add product option to add a new one")
     pTree.txtInOrder()
@@ -35,7 +35,7 @@ def updateProduct(pTree):
 
 def addProduct(pTree):
     pcode = input("Enter the product code: ")
-    checkp = pTree.search(pcode)
+    checkp = pTree.searchBST(pcode)
     pname = input("Enter the product name: ")
     while True:
         quantity = int(input(f"Enter the quantity of {pname}: "))
@@ -71,11 +71,11 @@ def breathFirstTraversal(filename):
 
 def searchPcode(pTree):
     pcode = input("Enter the product code you want to find: ")
-    product = pTree.search(pcode)
+    product = pTree.searchBST(pcode)
     if product is None:
         print(f"Can not find the product with product code {pcode}")
     else:
-        result = [product.pcode, product.pname, product.quantity, product.saled, product.price]
+        result = [[product.key.pcode, product.key.pname, product.key.quantity, product.key.saled, product.key.price]]
         headers = ["Product code", "Product name", "Quantity", "Saled", "Price"]
         table_str = tabulate(result, headers, tablefmt="grid")
         print("This is information of product you want to find:")
@@ -84,11 +84,13 @@ def searchPcode(pTree):
 
 def deletePcode(pTree):
     pcode = input("Enter the product code you want to delete: ")
-    product = pTree.search(pcode)
+    product = pTree.searchBST(pcode)
     if product is None:
         print(f"Product {pcode} don't have in my stock")
     else:
-        pTree.delete(pcode)
+        pTree.deleteBST(pcode)
+        pTree.txtInOrder()
+        pTree.txtBreadthFirst()
         print(f"Deleted sucessfully product {pcode}")
 #def
 
@@ -99,7 +101,7 @@ def countProduct(filename):
         count = 0
         for line in lines[3:-1:2]:
             count += 1
-        return f"Number of product is: {count}"
+    print(f"Number of product is: {count}")
 
 def balancing():
     pass
