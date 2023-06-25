@@ -3,12 +3,13 @@ from Employee import *
 from Product import *
 import datetime
 class Order: 
-    def __init__(self,ocode, pcode, pname, cname, quantity, ename, status, time):
+    def __init__(self,ocode, pcode, pname, ccode, cname, quantity, ename, status, time):
         self.pcode = pcode
         self.ocode = ocode
         self.pname = pname
         self.cname = cname
         self.ename = ename
+        self.ccode = ccode
         self.quantity = quantity
         self.status = status
         self.time = time
@@ -58,7 +59,7 @@ def createOrder(pTree, cList, eList, oList):
     quantity = int(input("Enter the number of product you want to order: "))
     status = "Ordering"
     time = datetime.datetime.now()
-    order = Order(ocode, pcode, pname, cname, quantity, ename, status, time)
+    order = Order(ocode, pcode, pname, ccode, cname, quantity, ename, status, time)
     oList.insert(order)
     oList.txtOrder()
     return "Create order successfully"
@@ -109,16 +110,37 @@ def completeOrder(oList,pTree, eList):
                 return "Completed the order {ocode}"
 #def
 
-def invoice(oList,pTree, cList, eList):
+def invoice(oList,pTree, cList):
     while True:
         ocode = input("Enter the order code to issue the invoice: ")
-        order = oList.search(ocode)
-        if order is not None: 
-            product = pTree.search(order.pcode)
-            customer = cList.search(order.cname)
-            employee = eList.search(order.ename)
-            status = order.status
+        order = oList.searchoCode(ocode)
+        if order is not None and order.status != "Ordering": 
+            product = pTree.searchBST(order.pcode)
+            customer = cList.searchcCode(order.ccode)
             time = order.time
-            
+            print("+----------------+---------------+---------------+---------------+---------------+")
+            print("INVOICE")
+            print("+----------------+---------------+---------------+---------------+---------------+")
+            print("1. Customer Information:")
+            print(f"Name: {order.cname}")
+            print(f"Sdt: {customer.phone}")
+            print("+----------------+---------------+---------------+---------------+---------------+")
+            print("Invoice Information")
+            result = [[product.key.pcode, product.key.pname, order.quantity, product.key.price, order.quantity*product.key.price, time]]
+            headers = ["Product code", "Product name", "Quantity", "Price", "Total", "Time"]
+            table_str = tabulate(result, headers, tablefmt="grid")
+            print(table_str)
+            print("+----------------+---------------+---------------+---------------+---------------+")
+            print("Order officer")
+            print(f"Name: {order.ename}")
+            print("+----------------+---------------+---------------+---------------+---------------+")    
         else:
             print("Order does not exist")
+            break
+#def
+
+
+def sortOrder(oList):
+    pass
+
+

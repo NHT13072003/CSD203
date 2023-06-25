@@ -14,7 +14,7 @@ def display_menu():
     print("1. Product")
     print("2. Customer")
     print("3. Order")
-    print("5. Manager employee")
+    print("4. Manager employee")
     print("0. Exit")
 #def 
 
@@ -46,6 +46,7 @@ def display_order():
     print("2. Display Order list")
     print("3. Complete Order")
     print("4. Print Invoice")
+    print("5. Sort by pcode + ccode")
     print("0. Exit")
 #def
 
@@ -129,7 +130,9 @@ def run():
                 elif choice3 == "3":
                     completeOrder(oList,pTree, eList)
                 elif choice3 == "4":
-                    invoice(oList,pTree, cList, eList)
+                    invoice(oList,pTree, cList)
+                elif choice3 == "5":
+                    sortOrder(oList)
                 elif choice3 == '0':
                     break
                 else:

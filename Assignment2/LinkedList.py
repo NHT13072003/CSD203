@@ -104,10 +104,10 @@ class LinkedList:
         
         while current:
             order = current.data
-            result.append([ order.ocode, order.pcode, order.pname, order.cname, order.quantity, order.ename, order.status, order.time])
+            result.append([ order.ocode, order.pcode, order.pname, order.ccode,  order.cname, order.quantity, order.ename, order.status, order.time])
             current = current.next
         
-        headers = ["Order Code", "Product Code", "Product Name","Customer Name", "Quanlity", "Employee Name", "Order Status", "Order Time"]
+        headers = ["Order Code", "Product Code", "Product Name", "Customer Code","Customer Name", "Quanlity", "Employee Name", "Order Status", "Order Time"]
         table_str = tabulate(result, headers, tablefmt="grid")
         with open("Order_List.txt", "w") as file:
             file.write(table_str)
@@ -128,6 +128,16 @@ class LinkedList:
             file.write(table_str)
     #def
 
+    def orderList(self):
+        current = self.head
+        result = []
+        
+        while current:
+            order = current.data
+            result.append([ order.ocode, order.pcode, order.pname, order.ccode,  order.cname, order.quantity, order.ename, order.status, order.time])
+            current = current.next
+        
+        return result
 
     #def
 
@@ -160,7 +170,7 @@ def loadOrder(filename):
         lines = table_str.split('\n')
         for line in lines[3:-1:2]:
             data = line.split('|')[1:-1]  
-            order = Order(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip(), int(data[4].strip()), data[5].strip(), data[6].strip(), data[7].strip())  
+            order = Order(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip(), data[4].strip(), int(data[5].strip()), data[6].strip(), data[7].strip(), data[8].strip())  
             oList.insert(order)
     return oList
 #def
