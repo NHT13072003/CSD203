@@ -101,19 +101,7 @@ class LinkedList:
             file.write(table_str)
     #def
 
-    def txtOrder(self):
-        current = self.head
-        result = []
-        
-        while current:
-            order = current.data
-            result.append([order.ocode, order.cname, order.pname, order.quantity, order.status])
-            current = current.next
-        
-        headers = ["Order code", "Customer name", "Product", "Quantity", "Status"]
-        table_str = tabulate(result, headers, tablefmt="grid")
-        with open("Order_List.txt", "w") as file:
-            file.write(table_str)
+
     #def
 
     def findMax(self):
@@ -125,7 +113,7 @@ class LinkedList:
             curr = curr.next
         return max
     
-def loadLL(filename):
+def loadCustomer(filename):
     cList = LinkedList()
     with open(filename, "r") as file:
         table_str = file.read()
@@ -134,4 +122,26 @@ def loadLL(filename):
             data = line.split('|')[1:-1]  
             customer = Customer(data[0].strip(), data[1].strip(), data[2].strip())  
             cList.insert(customer)
+#def
+
+def loadOrder(filename):
+    oList = LinkedList()
+    with open(filename, "r") as file:
+        table_str = file.read()
+        lines = table_str.split('\n')
+        for line in lines[3:-1:2]:
+            data = line.split('|')[1:-1]  
+            order = Order(data[0].strip(), data[1].strip(), data[2].strip(), data[3].strip(), data[4].strip(), data[5].strip(), data[6].strip(), data[7].strip())  
+            oList.insert(order)
+#def
+
+def loadEmployee(filename):
+    eList = LinkedList()
+    with open(filename, "r") as file:
+        table_str = file.read()
+        lines = table_str.split('\n')
+        for line in lines[3:-1:2]:
+            data = line.split('|')[1:-1]  
+            employee = Employee(data[0].strip(), data[1].strip(), data[2].strip())  
+            eList.insert(employee)
 #def

@@ -1,4 +1,5 @@
 from tabulate import tabulate
+from BST import *
 class Product:
     def __init__(self,pcode, pname, quantity, saled, price):
         self.pcode = pcode

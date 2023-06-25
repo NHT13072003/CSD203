@@ -193,9 +193,9 @@ class BSTree:
             if key == current.key:
                 return current.key  
             elif key < current.key:
-                current = current.left  
+                current = current.lt  
             else:
-                current = current.right 
+                current = current.rt 
 
         return None
     # def search by key
@@ -234,9 +234,9 @@ class BSTree:
             curr = nodes.pop(0)
             result.append([curr.key.pcode, curr.key.pname, curr.key.quantity, curr.key.saled, curr.key.price])
 
-            if curr.left:
+            if curr.lt:
                 nodes.append(curr.lt)
-            if curr.right:
+            if curr.rt:
                 nodes.append(curr.rt)
         headers = ["Product code", "Product name", "Quantity", "Saled", "Price"]
         table_str = tabulate(result, headers, tablefmt="grid")

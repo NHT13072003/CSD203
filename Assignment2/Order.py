@@ -16,7 +16,7 @@ class Order:
 
 #class
 
-def createOrder(pList, cList, eList, oList):
+def createOrder(pTree, cList, eList, oList):
     while True:
         ocode = input("Enter the order code: ")
         if oList.search(ocode) is not None:
@@ -25,10 +25,10 @@ def createOrder(pList, cList, eList, oList):
             break
     while True:
         pcode = input("Enter the product code: ")
-        if pList.search(pcode) is None:
+        if pTree.search(pcode) is None:
             print("Product does not exist!")
         else:
-            product = pList.search(pcode)
+            product = pTree.search(pcode)
             pname = product.pname
             break
     while True:
@@ -69,7 +69,7 @@ def displayOrder(oList):
     oList.display("Order_List.txt")
 #def
 
-def completeOrder(oList,pList, eList):
+def completeOrder(oList,pTree, eList):
     while True:
         ocode = input("Enter the order code: ")
         order = oList.search(ocode)
@@ -79,7 +79,7 @@ def completeOrder(oList,pList, eList):
             break
     checkStatus = order.status
     if checkStatus == "Ordering":
-        product = pList.search(order.pcode)
+        product = pTree.search(order.pcode)
         available = product.quantity - product.saled
         if order.quantity <= available:
             order.status = "Completed"
@@ -106,12 +106,12 @@ def completeOrder(oList,pList, eList):
                 return "Completed the order {ocode}"
 #def
 
-def invoice(oList,pList, cList, eList):
+def invoice(oList,pTree, cList, eList):
     while True:
-        ocode = input("Enter the order code to issue the invice: ")
+        ocode = input("Enter the order code to issue the invoice: ")
         order = oList.search(ocode)
         if order is not None: 
-            product = pList.search(order.pcode)
+            product = pTree.search(order.pcode)
             customer = cList.search(order.cname)
             employee = eList.search(order.ename)
             status = order.status
