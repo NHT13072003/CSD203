@@ -132,22 +132,24 @@ class BSTree:
         return result
     # def pre order traversal
 
-    def inOrder(self, root = 0):
+    def inOrder(self, root = 0, result = []):
         curr = root
         if root == 0:
             curr = self.root
         if root == None:
-            return []
+            return None
         else:
             result = []
             result_lt = self.inOrder(curr.lt)
-            for x in result_lt:
-                result.append(x)
-
+            if result_lt is not None:
+                for x in result_lt:
+                    result.append(x)
             result.append(curr.key)
             result_rt = self.inOrder(curr.rt)
-            for x in result_rt:
-                result.append(x)
+            if result_rt is not None:
+                for x in result_rt:
+                    result.append(x)
+            
             return result
     # def in order traversal
 
@@ -193,17 +195,16 @@ class BSTree:
             return []
         else:
             result = []
-            result_lt = self.inOrder(curr.lt)
-            for x in result_lt:
-                product = x
-                result.append([product.pcode, product.pname, product.quantity, product.saled, product.price])
+            result_list = []
 
-            result.append([curr.key.pcode, curr.key.pname, curr.key.quantity, curr.key.saled, curr.key.price])
-            result_rt = self.inOrder(curr.rt)
-            for x in result_rt:
-                result.append([product.pcode, product.pname, product.quantity, product.saled, product.price])
+            result = self.inOrder(self.root)
+            for x in result:
+                product = x
+                result_list.append([product.pcode, product.pname, product.quantity, product.saled, product.price])
+
+
         headers = ["Product code", "Product name", "Quantity", "Saled", "Price"]
-        table_str = tabulate(result, headers, tablefmt="grid")
+        table_str = tabulate(result_list, headers, tablefmt="grid")
         with open("Product_List_IO.txt", "w") as file:
             file.write(table_str)
     # def write in order traversal in txt file
